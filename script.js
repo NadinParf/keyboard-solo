@@ -1,9 +1,9 @@
 const words = ['cat', 'elephant', 'country', 'pineapple', 'cherry', 'travelling', 'table', 'weather', 'banana', 'number', 'insects', 'plane'];
 const wordElement = document.querySelector('.word');
 const statisticElement = document.querySelector('.status');
-const correctCount = document.querySelector('.correct-count');
-const wrongCount = document.querySelector('.wrong-count');
-const wordMistakes = document.querySelector('.word-mistakes');
+const correctCountElement = document.querySelector('.correct-count');
+const wrongCountElement = document.querySelector('.wrong-count');
+const wordMistakesElement = document.querySelector('.word-mistakes');
 const timerElement = document.getElementById('timer');
 
 let currentWord = '';
@@ -27,16 +27,37 @@ function displayWord() {
     }
 }
 
+function checkWordsCount() {
+    if (wrongtWords === 5) {
+        alert(`Вы проиграли :( Ваше время ${timerElement.textContent})`);
+        correctWords = 0;
+        wrongtWords = 0;
+        upgradeStatistic();
+        stopTimer();
+        startTimer();
+    }
+
+    if (correctWords === 5) {
+        alert(`Победа! Ваше время ${timerElement.textContent}`);
+        correctWords = 0;
+        wrongtWords = 0;
+        upgradeStatistic();
+        stopTimer();
+        startTimer();
+    }
+}
+
 function startNewWord() {
     currentWord = getRandomWord();
     currentLetterIndex = 0;
     displayWord();
+    checkWordsCount();
 }
 
 function upgradeStatistic() {
-    correctCount.textContent = correctWords;
-    wrongCount.textContent = wrongtWords;
-    wordMistakes.textContent = currentWordMistakes;
+    correctCountElement.textContent = correctWords;
+    wrongCountElement.textContent = wrongtWords;
+    wordMistakesElement.textContent = currentWordMistakes;
 }
 
 function startTimer() {
@@ -75,48 +96,19 @@ document.addEventListener("keydown", (event) => {
             if (currentWordMistakes === 0) {
                 correctWords++;
 
-                if (correctWords === 5) {
-                    stopTimer();
-                    const minutes = Math.floor(seconds / 60);
-                    const remainingSeconds = seconds % 60;
-
-                    const formattedMinutes = minutes < 10 ? "0" + minutes : String(minutes);
-                    const formattedSeconds = remainingSeconds < 10 ? "0" + remainingSeconds : String(remainingSeconds);
-
-                    const timeMessage = `Ваше время: ${formattedMinutes}:${formattedSeconds}`;
-                    setTimeout(alert('Вы выйграли' + ' ' + timeMessage), 1000);
-                    correctWords = 0;
-                    wrongtWords = 0;
-                    upgradeStatistic();
-                    
-
-                }
+                
                 
                 upgradeStatistic();
 
             } else {
                 wrongtWords++;
-                if (wrongtWords === 5) {
-                    stopTimer();
-                    const minutes = Math.floor(seconds / 60);
-                    const remainingSeconds = seconds % 60;
-
-                    const formattedMinutes = minutes < 10 ? "0" + minutes : String(minutes);
-                    const formattedSeconds = remainingSeconds < 10 ? "0" + remainingSeconds : String(remainingSeconds);
-
-                    const timeMessage = `Ваше время: ${formattedMinutes}:${formattedSeconds}`;
-                    setTimeout(alert('Вы проиграли' + ' ' + timeMessage), 1000);
-                    correctWords = 0;
-                    wrongtWords = 0;
-                    upgradeStatistic();
-                }
+                
                 
                 upgradeStatistic();
             }
 
 
             setTimeout(startNewWord, 100);
-            startTimer();
             currentWordMistakes = 0;
             
             upgradeStatistic();
