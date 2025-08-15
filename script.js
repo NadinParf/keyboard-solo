@@ -9,7 +9,7 @@ const timerElement = document.getElementById('timer');
 let currentWord = '';
 let currentLetterIndex = 0;
 let correctWords = 0;
-let wrongtWords = 0;
+let wrongWords = 0;
 let currentWordMistakes = 0;
 let timerInterval;
 let seconds = 0;
@@ -28,10 +28,10 @@ function displayWord() {
 }
 
 function checkWordsCount() {
-    if (wrongtWords === 5) {
+    if (wrongWords === 5) {
         alert(`Вы проиграли :( Ваше время ${timerElement.textContent})`);
         correctWords = 0;
-        wrongtWords = 0;
+        wrongWords = 0;
         upgradeStatistic();
         stopTimer();
         startTimer();
@@ -40,7 +40,7 @@ function checkWordsCount() {
     if (correctWords === 5) {
         alert(`Победа! Ваше время ${timerElement.textContent}`);
         correctWords = 0;
-        wrongtWords = 0;
+        wrongWords = 0;
         upgradeStatistic();
         stopTimer();
         startTimer();
@@ -56,7 +56,7 @@ function startNewWord() {
 
 function upgradeStatistic() {
     correctCountElement.textContent = correctWords;
-    wrongCountElement.textContent = wrongtWords;
+    wrongCountElement.textContent = wrongWords;
     wordMistakesElement.textContent = currentWordMistakes;
 }
 
@@ -95,22 +95,15 @@ document.addEventListener("keydown", (event) => {
         if (currentLetterIndex === currentWord.length) {
             if (currentWordMistakes === 0) {
                 correctWords++;
-
-                
-                
                 upgradeStatistic();
 
             } else {
-                wrongtWords++;
-                
-                
+                wrongWords++;
                 upgradeStatistic();
             }
 
-
             setTimeout(startNewWord, 100);
             currentWordMistakes = 0;
-            
             upgradeStatistic();
         }
     } else {
