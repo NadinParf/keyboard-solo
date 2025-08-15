@@ -27,31 +27,32 @@ function displayWord() {
     }
 }
 
+function resetGame() {
+    correctWords = 0;
+    wrongWords = 0;
+    upgradeStatistic();
+    stopTimer();
+    startTimer();
+}
+
 function checkWordsCount() {
     if (wrongWords === 5) {
         alert(`Вы проиграли :( Ваше время ${timerElement.textContent})`);
-        correctWords = 0;
-        wrongWords = 0;
-        upgradeStatistic();
-        stopTimer();
-        startTimer();
+        resetGame();
     }
 
     if (correctWords === 5) {
         alert(`Победа! Ваше время ${timerElement.textContent}`);
-        correctWords = 0;
-        wrongWords = 0;
-        upgradeStatistic();
-        stopTimer();
-        startTimer();
+        resetGame();
     }
 }
 
 function startNewWord() {
+    checkWordsCount();
     currentWord = getRandomWord();
     currentLetterIndex = 0;
     displayWord();
-    checkWordsCount();
+    
 }
 
 function upgradeStatistic() {
